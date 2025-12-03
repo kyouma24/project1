@@ -1,6 +1,7 @@
 name: Website Deployment
 on:
   push:
+  workflow_dispatch:
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -11,9 +12,10 @@ jobs:
         id: cache
         uses: actions/cache@v4
         with:
-          path: ~/.npm
+          path: node_modules
           key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
       - name: Lint code
         run: npm run lint
@@ -29,6 +31,7 @@ jobs:
           path: ~/.npm
           key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
       - name: Test code
         id: test-case
@@ -52,6 +55,7 @@ jobs:
           path: ~/.npm
           key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
       - name: Build website
         id: build-website
