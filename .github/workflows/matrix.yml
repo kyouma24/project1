@@ -11,6 +11,12 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest]
         node-version: [18, 20, 24]
+        include:  
+          - os: ubuntu-latest  # This combo will be added to the existing matrix
+            node-version: 24
+        exlude: 
+          - os: macos-latest   # This combo will be removed from the existing matrix
+            node-version: 20
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout code
