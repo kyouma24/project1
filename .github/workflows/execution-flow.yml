@@ -82,8 +82,9 @@ jobs:
   output:
     runs-on: ubuntu-latest
     needs: [lint, deploy]
-    if: failure()
+    if: success()
     steps:
       - name: Output message
         run: |
-          echo "Something went wrong. One of the jobs has failed."
+          echo "Success."
+          echo "${{ toJSON(github) }}"
