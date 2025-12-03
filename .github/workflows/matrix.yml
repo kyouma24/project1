@@ -24,6 +24,6 @@ jobs:
       - name: Setup NodeJS
         uses: actions/setup-node@v5
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: ${{ matrix.node-version[2] }}
       - name: Deploying application
         run: echo "Deployed application...."
