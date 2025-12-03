@@ -1,6 +1,8 @@
 name: Website Deployment
 on:
   push:
+    paths:
+      - .github/workflows/execution-flow.yml
   workflow_dispatch:
 jobs:
   lint:
