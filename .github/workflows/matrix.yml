@@ -11,13 +11,13 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest]
         node-version: [18, 20, 24]
-    runs-on: ${{ matrix.os }}
+    runs-on: ${{ matrix.os[0] }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
       - name: Setup NodeJS
         uses: actions/setup-node@v5
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: ${{ matrix.node-version[2] }}
       - name: Deploying application
         run: echo "Deployed application...."
