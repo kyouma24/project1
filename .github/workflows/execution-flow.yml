@@ -74,3 +74,11 @@ jobs:
         run: ls
       - name: Deploy
         run: echo "If you are seeing this message, then the continue-on-error worked!"
+  
+  output:
+    runs-on: ubuntu-latest
+    if: failure()
+    steps:
+      - name: Output message
+        run: |
+          echo "Something went wrong. One of the jobs has failed."
