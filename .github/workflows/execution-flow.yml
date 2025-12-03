@@ -19,7 +19,6 @@ jobs:
         run: npm run lint
   test:
     runs-on: ubuntu-latest
-    continue-on-error: true
     steps:
       - name: Get code
         uses: actions/checkout@v5
@@ -54,11 +53,6 @@ jobs:
           key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: Install dependencies
         run: npm ci
-      - name: Verify Tests Passed
-        if: needs.test.outputs.test-case != 'success'
-        run: |
-          echo "Tests failed. Stopping the build process."
-          exit 1
       - name: Build website
         id: build-website
         run: npm run build
@@ -72,15 +66,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Get build artifacts
-        if: needs.build.result == 'success'
-        continue-on-error: true
         id: download-artifact
         uses: actions/download-artifact@v5
         with:
           name: dist-files
       - name: Output contents
-        if: steps.download-artifact.outcome == 'success'
-        continue-on-error: true
         run: ls
       - name: Deploy
         run: echo "If you are seeing this message, then the continue-on-error worked!"
