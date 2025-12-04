@@ -31,13 +31,13 @@ jobs:
           path: node_modules
           key: ${{ runner.os }}-deps-${{ hashFiles('**/package-lock.json') }}
       - name: Install Dependencies
-        if: ${{ steps.caching.outputs.cache-hit }} != 'true'
+        if: steps.caching.outputs.cache-hit != 'true'
         run: npm ci
       - name: Test Code
         id: test-case
         run: npm run test
       - name: Upload Test report
-        if: failure() && ${{ steps.test-case.outcome }} == 'failure'
+        if: failure() && steps.test-case.outcome == 'failure'
         uses: actions/upload-artifact@v4
         with: 
           name: test-report
