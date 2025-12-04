@@ -79,7 +79,7 @@ jobs:
         run: ls
       - name: Deploying Application
         run: echo "Deployed & Uploaded"
-	
+    
   report: 
     runs-on: ubuntu-latest
     needs: [lint, deploy]
