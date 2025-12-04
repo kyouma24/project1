@@ -78,12 +78,11 @@ jobs:
         run: ls
       - name: Deploying Application
         run: echo "Deployed & Uploaded"
+      - name: Output GitHub Context
+        run: echo "${{ toJSON(github) }}"
     
   report: 
     runs-on: ubuntu-latest
-    needs: [lint, deploy]
     steps: 
-      - name: Failure
-        run: "Something went wrong, one of the job failed"
       - name: Output GitHub Context
         run: echo "${{ toJSON(github.event) }}"
