@@ -82,7 +82,7 @@ jobs:
   report: 
     runs-on: ubuntu-latest
     needs: [lint, deploy]
-    if: failure()
+    if: success()
     steps: 
       - name: Failure
         run: "Something went wrong, one of the job failed"
