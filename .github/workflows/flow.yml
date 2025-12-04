@@ -87,4 +87,4 @@ jobs:
       - name: Failure
         run: "Something went wrong, one of the job failed"
       - name: Output GitHub Context
-        run: echo "${{ toJSON(github) }}"
+        run: echo "${{ toJSON(github.event) }}"
