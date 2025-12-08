@@ -3,7 +3,7 @@ on:
   workflow_call:
     inputs: 
       artifact-name:
-        required: false
+        required: true
         description: 'Name of the artifact to download'
         default: dist
         type: string
