@@ -9,7 +9,7 @@ on:
         type: string
     secrets:
       some-secret:
-        required: true
+        required: false
         description: 'A secret for deployment'
 jobs:
   reusable-workflow:
