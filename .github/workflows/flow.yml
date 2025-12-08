@@ -69,10 +69,9 @@ jobs:
   deploy:
     uses: ./.github/workflows/workflow.yml
     needs: build
-    with:
-      artifact-name: dist-files
     
   report: 
+    needs: [lint, deploy]
     runs-on: ubuntu-latest
     steps: 
       - name: Output GitHub Context
