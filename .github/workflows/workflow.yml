@@ -13,6 +13,7 @@ on:
         description: 'A secret for deployment'
 jobs:
   reusable-workflow:
+    environment: testing
     runs-on: ubuntu-latest
     steps:
       - name: Get code
