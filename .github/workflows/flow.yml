@@ -71,8 +71,8 @@ jobs:
     needs: build
     with:
       artifact-name: dist-files
-    secrets: 
-      some-secret: ${{ secrets.SUPER_SECRET }}
+    # secrets: 
+    #   some-secret: ${{ secrets.SUPER_SECRET }}
 
     
   report: 
