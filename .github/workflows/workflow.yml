@@ -7,6 +7,10 @@ on:
         description: 'Name of the artifact to download'
         default: dist-files
         type: string
+    secrets:
+      some-secret:
+        required: true
+        description: 'A secret for deployment'
 jobs:
   reusable-workflow:
     runs-on: ubuntu-latest
