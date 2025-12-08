@@ -69,8 +69,7 @@ jobs:
   deploy:
     uses: ./.github/workflows/workflow.yml
     needs: build
-    with:
-      artifact-name: dist-files
+
     
   report: 
     needs: [lint, deploy]
