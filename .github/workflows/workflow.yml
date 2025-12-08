@@ -23,6 +23,8 @@ jobs:
       - name: Output Files
         run: ls
       - name: Deploying Application
-        run: echo "Deployed & Uploaded"
+        run: | 
+          echo "Deployed & Uploaded"
+          echo "Output Variable = ${{ vars.ENV }}"
       - name: Output GitHub Context
         run: echo "${{ toJSON(github) }}"
