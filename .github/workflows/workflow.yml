@@ -11,8 +11,14 @@ on:
       some-secret:
         required: false
         description: 'A secret for deployment'
+    outputs:
+      result:
+        description: 'Deployment status'
+        value: ${{ jobs.reusable-workflow.outputs.status}}
 jobs:
   reusable-workflow:
+    outputs:
+      status: ${{ steps.set-output.outputs.deployment-status }}
     environment: testing
     runs-on: ubuntu-latest
     steps:
@@ -28,3 +34,6 @@ jobs:
           echo "Output Variable = ${{ vars.ENV }}"
       - name: Output GitHub Context
         run: echo "${{ toJSON(github) }}"
+      - name: Set Output
+        id: set-output
+        run: echo "deployment-status=success" >> $GITHUB_OUTPUT
