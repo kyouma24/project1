@@ -12,7 +12,7 @@ jobs:
     environment: testing
     runs-on: ubuntu-latest
     env:
-      # MONGODB_CONNECTION_PROTOCOL: ${{ vars.MONGODB_CONNECTION_PROTOCOL }}
+      MONGODB_CONNECTION_PROTOCOL: mongodb+srv://
       MONGODB_CLUSTER_ADDRESS: ${{ vars.MONGODB_CLUSTER_ADDRESS }}
       MONGODB_USERNAME: ${{ secrets.MONGODB_USERNAME }}
       MONGODB_PASSWORD: ${{ secrets.MONGODB_PASSWORD }}
