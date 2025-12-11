@@ -11,13 +11,27 @@ jobs:
   test:
     environment: testing
     runs-on: ubuntu-latest
-    container: node:25
+    container: 
+      image: node:25
     env:
-      MONGODB_CONNECTION_PROTOCOL: mongodb+srv
-      MONGODB_CLUSTER_ADDRESS: ${{ vars.MONGODB_CLUSTER_ADDRESS }}
-      MONGODB_USERNAME: ${{ secrets.MONGODB_USERNAME }}
-      MONGODB_PASSWORD: ${{ secrets.MONGODB_PASSWORD }}
+      MONGODB_CONNECTION_PROTOCOL: mongodb
+      MONGODB_CLUSTER_ADDRESS: mongodb
+      MONGODB_USERNAME: root_user
+      MONGODB_PASSWORD: root_password
       PORT: 8080
+    services:
+      mongodb:
+        image: mongo:6.0
+        ports:
+          - 27017:27017
+        options: >-
+          --health-cmd="mongosh --eval 'db.adminCommand(\"ping\")'" 
+          --health-interval=10s 
+          --health-timeout=5s 
+          --health-retries=5
+        env: 
+          MONGO_INITDB_ROOT_USERNAME: root_user
+          MONGO_INITDB_ROOT_PASSWORD: root_password
     steps:
       - name: Get Code
         uses: actions/checkout@v3
@@ -29,7 +43,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Run server
-        run: npm start & npx wait-on http://127.0.0.1:${{ vars.PORT }} # requires MongoDB Atlas to accept requests from anywhere!
+        run: npm start & npx wait-on mongodb:27017 # requires MongoDB Atlas to accept requests from anywhere!
       - name: Run tests
         run: npm test
       - name: Output information
