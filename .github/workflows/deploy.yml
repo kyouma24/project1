@@ -11,6 +11,7 @@ jobs:
   test:
     environment: testing
     runs-on: ubuntu-latest
+    container: node:25
     env:
       MONGODB_CONNECTION_PROTOCOL: mongodb+srv
       MONGODB_CLUSTER_ADDRESS: ${{ vars.MONGODB_CLUSTER_ADDRESS }}
