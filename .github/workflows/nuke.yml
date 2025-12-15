@@ -55,10 +55,3 @@ jobs:
           done
           
           echo "✅ All checks passed. Proceeding to nuke..."
-
-      - name: Run AWS Nuke
-        if: success() # Only run if the previous step succeeded
-        run: |
-          echo "Running AWS Nuke..."
-          # Your aws-nuke command goes here
-          # ./aws-nuke -c config.yaml --force
