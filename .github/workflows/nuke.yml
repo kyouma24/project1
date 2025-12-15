@@ -55,17 +55,9 @@ jobs:
           done
           
           echo "✅ All checks passed. Proceeding to nuke..."
-      
-      - name: Run Nginx container
-        if: failure()
-        uses: addnab/docker-run-action@v3
-        with: 
-          image: nginx:latest
-          options: -d -p 8080:80
 
       - name: Run AWS Nuke
-        if: success() # Only run if the previous step succeeded
+        if: failure() # Only run if the previous step succeeded
         run: |
-          echo "Running AWS Nuke..."
-          # Your aws-nuke command goes here
-          # ./aws-nuke -c config.yaml --force
+          wget -c https://github.com/rebuy-de/aws-nuke/releases/download/v2.25.0/aws-nuke-v2.25.0-linux-amd64.tar.gz -O - | tar -xz -C ./
+          ls
