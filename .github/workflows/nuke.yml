@@ -1,72 +1,55 @@
-name: AWS Nuke Safety Check
-
-on:
-  schedule:
-    - cron: '0 0 * * *' # Run daily (example)
+name: Testing Auth
+on: 
+  push: 
   workflow_dispatch:
-
 jobs:
   nuke-aws:
     runs-on: ubuntu-latest
+    env:
+      IAM_USERS_LIST: ${{ secrets.SAFE_USERS }} 
+      
     steps:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
+          aws-access-key-id: ${{ secrets.ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.SECRET_KEY }}
+          aws-region: ap-south-1
 
-      - name: Safety Check - Verify Last Logins
-        id: safety_check
+      - name: Safety Check
         shell: bash
         run: |
-          # Define the users to check
-          USERS=("UserA" "UserB" "UserC")
-          
-          # Set safety window (72 hours in seconds)
-          SAFE_WINDOW=259200
-          
-          CURRENT_TIME=$(date +%s)
-          echo "Checking login activity for users: ${USERS[@]}"
+          IFS=',' read -r -a USERS <<< "$IAM_USERS_LIST"
 
+          SAFE_WINDOW=259200
+          CURRENT_TIME=$(date +%s)
+          
+          echo "Checking login activity for: ${USERS[@]}"
+
+          # 3. Loop through the generated array
           for user in "${USERS[@]}"; do
-            echo "--------------------------------"
-            echo "Checking user: $user"
             
-            # Get User Info. If user doesn't exist, we skip (or fail, depending on preference)
+             # Clean up any accidental whitespace around names
+            user=$(echo "$user" | xargs)
+
+            echo "Checking user: $user"
             USER_INFO=$(aws iam get-user --user-name "$user" 2>/dev/null)
             
-            if [ $? -ne 0 ]; then
-              echo "User $user not found. Skipping."
-              continue
-            fi
+            # ... (Rest of logic is the same) ...
+             if [ $? -ne 0 ]; then
+               echo "User $user not found. Skipping."
+               continue
+             fi
 
-            # Extract PasswordLastUsed time (returns "None" if never logged in)
-            LAST_LOGIN_ISO=$(echo "$USER_INFO" | jq -r '.User.PasswordLastUsed // "None"')
+             LAST_LOGIN_ISO=$(echo "$USER_INFO" | jq -r '.User.PasswordLastUsed // "None"')
 
-            if [ "$LAST_LOGIN_ISO" == "None" ]; then
-              echo "  - User has NEVER logged in via Console. Safe."
-            else
-              # Convert ISO8601 to Unix Timestamp
-              LAST_LOGIN_TS=$(date -d "$LAST_LOGIN_ISO" +%s)
-              DIFF=$((CURRENT_TIME - LAST_LOGIN_TS))
-              
-              echo "  - Last login: $LAST_LOGIN_ISO ($DIFF seconds ago)"
-              
-              if [ "$DIFF" -lt "$SAFE_WINDOW" ]; then
-                echo "🛑 DANGER: User $user logged in recently (< 72 hours). ABORTING NUKE!"
-                exit 1
-              else
-                echo "  - Login was over 72 hours ago. Safe."
-              fi
-            fi
+             if [ "$LAST_LOGIN_ISO" != "None" ]; then
+                LAST_LOGIN_TS=$(date -d "$LAST_LOGIN_ISO" +%s)
+                DIFF=$((CURRENT_TIME - LAST_LOGIN_TS))
+                
+                if [ "$DIFF" -lt "$SAFE_WINDOW" ]; then
+                  echo "🛑 STOP: User $user logged in recently. ABORTING."
+                  exit 1
+                fi
+             fi
           done
-          
-          echo "✅ All checks passed. Proceeding to nuke..."
-
-      - name: Run AWS Nuke
-        if: success() # Only run if the previous step succeeded
-        run: |
-          echo "Running AWS Nuke..."
-          # Your aws-nuke command goes here
-          # ./aws-nuke -c config.yaml --force

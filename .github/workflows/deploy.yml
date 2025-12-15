@@ -1,9 +1,6 @@
 name: Deployment (Container)
 on:
-  push:
-    branches:
-      - master
-      - dev
+  workflow_dispatch:
 env:
   CACHE_KEY: node-deps
   MONGODB_DB_NAME: gha-demo
@@ -25,11 +22,11 @@ jobs:
         ports:
           - 27017:27017
         options: >-
-          --health-cmd="mongosh --eval 'db.adminCommand(\"ping\")'" 
-          --health-interval=10s 
-          --health-timeout=5s 
+          --health-cmd="mongosh --eval 'db.adminCommand(\"ping\")'"
+          --health-interval=10s
+          --health-timeout=5s
           --health-retries=5
-        env: 
+        env:
           MONGO_INITDB_ROOT_USERNAME: root_user
           MONGO_INITDB_ROOT_PASSWORD: root_password
     steps:
