@@ -1,0 +1,10 @@
+name: Testing Repo Variables
+on: 
+  push: 
+  workflow_dispatch:
+jobs:
+  test-repo-vars:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Output Repo Variables
+        run: echo ${{ vars.TEST }}
