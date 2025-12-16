@@ -1,6 +1,5 @@
 name: Testing Auth
 on: 
-  push: 
   workflow_dispatch:
 jobs:
   nuke-aws:
@@ -9,6 +8,9 @@ jobs:
       IAM_USERS_LIST: ${{ secrets.SAFE_USERS }} 
       
     steps:
+      - name: Get code
+        uses: actions/checkout@v6
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
