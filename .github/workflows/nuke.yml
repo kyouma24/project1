@@ -66,6 +66,7 @@ jobs:
           chmod +x aws-nuke
 
       - name: Run AWS Nuke
+        if: always()
         run: |
           ./aws-nuke run --config nuke-config.yml \
           --access-key-id ${{ secrets.ACCESS_KEY }} \
