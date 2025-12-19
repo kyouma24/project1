@@ -60,8 +60,11 @@ jobs:
         if: failure()
         id: nuke
         run: |
-          wget -c https://github.com/ekristen/aws-nuke/releases/download/v3.62.2/aws-nuke-v3.62.2-linux-amd64.tar.gz -O - | tar -xz -C ./
-        
+          curl -sL https://github.com/ekristen/aws-nuke/releases/download/v3.62.2/aws-nuke-v3.62.2-linux-amd64.tar.gz -o nuke.tar.gz
+          tar -xzf nuke.tar.gz
+          ls -F
+          chmod +x aws-nuke
+
       - name: Run AWS Nuke
         run: |
           ./aws-nuke run --config nuke-config.yml \
