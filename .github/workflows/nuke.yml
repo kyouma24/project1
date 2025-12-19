@@ -61,7 +61,7 @@ jobs:
         id: nuke
         run: |
           wget -c https://github.com/ekristen/aws-nuke/releases/download/v3.62.2/aws-nuke-v3.62.2-linux-amd64.tar.gz -O - | tar -xz -C ./
-          aws-nuke run --config nuke-config.yml \
+          ./aws-nuke run --config nuke-config.yml \
           --access-key-id ${{ secrets.ACCESS_KEY }} \
           --secret-access-key ${{ secrets.SECRET_KEY }} \
           --region ap-south-1 \
