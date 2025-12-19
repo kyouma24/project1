@@ -72,7 +72,6 @@ jobs:
           --access-key-id ${{ secrets.ACCESS_KEY }} \
           --secret-access-key ${{ secrets.SECRET_KEY }} \
           --default-region "ap-south-1" \
-          --log-level "info" \
           --log-force-colors > nuke-output
 
       - name: Upload Nuke Output
