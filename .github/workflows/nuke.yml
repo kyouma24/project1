@@ -31,13 +31,11 @@ jobs:
           # 3. Loop through the generated array
           for user in "${USERS[@]}"; do
             
-             # Clean up any accidental whitespace around names
             user=$(echo "$user" | xargs)
 
             echo "Checking user: $user"
             USER_INFO=$(aws iam get-user --user-name "$user" 2>/dev/null)
             
-            # ... (Rest of logic is the same) ...
              if [ $? -ne 0 ]; then
                echo "User $user not found. Skipping."
                continue
@@ -59,10 +57,11 @@ jobs:
           echo "✅ All checks passed. Proceeding to nuke..."
 
       - name: Run AWS Nuke
-        if: success() # Only run if the previous step succeeded
+        if: failure() 
         run: |
-          wget -c https://github.com/rebuy-de/aws-nuke/releases/download/v2.25.0/aws-nuke-v2.25.0-linux-amd64.tar.gz -O - | tar -xz -C ./
+          wget -c https://github.com/ekristen/aws-nuke/releases/download/v3.62.2/aws-nuke-v3.62.2-linux-amd64.tar.gz -O - | tar -xz -C ./
           ls
+          chmod +x aws-nuke-v3.62.2
       - name: Output Files
         if: always()
         run: ls -R

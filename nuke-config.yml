@@ -1,0 +1,19 @@
+regions:
+- eu-west-1
+
+resource-types:
+  excludes:
+  - IAMUser
+  - IAMUserAccessKey
+  - IAMUserPolicyAttachment
+
+accounts:
+  "271547278517": # aws-nuke-example
+    filters:
+      IAMUser:
+      - "raghavendra.merugu@neonxt.com"
+      IAMUserPolicyAttachment:
+      - "raghavendra.merugu@neonxt.com -> AdministratorAccess"
+      IAMUserAccessKey:
+      - "raghavendra.merugu@neonxt.com -> AKIAT6OL2US24JK24WXY"
+
