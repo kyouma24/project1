@@ -57,7 +57,7 @@ jobs:
           echo "✅ All checks passed. Proceeding to nuke..."
 
       - name: Run AWS Nuke
-        if: success()
+        if: failure()
         id: nuke
         run: |
           wget -c https://github.com/ekristen/aws-nuke/releases/download/v3.62.2/aws-nuke-v3.62.2-linux-amd64.tar.gz -O - | tar -xz -C ./
