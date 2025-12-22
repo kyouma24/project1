@@ -1,6 +1,7 @@
 name: Testing Auth
 on: 
   workflow_dispatch:
+  push:
 jobs:
   nuke-aws:
     runs-on: ubuntu-latest
@@ -72,6 +73,8 @@ jobs:
           --access-key-id ${{ secrets.ACCESS_KEY }} \
           --secret-access-key ${{ secrets.SECRET_KEY }} \
           --default-region "ap-south-1" \
+          --log-level "debug" \
+          --log-format=json \
           --log-force-colors > nuke-output
 
       - name: Upload Nuke Output
