@@ -16,6 +16,8 @@ resource-types:
     - IAMUserPolicyAttachment
   includes:
     - S3Object
+    - S3Bucket
+    - EC2Instance
   
 
 accounts:

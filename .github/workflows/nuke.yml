@@ -72,11 +72,13 @@ jobs:
           ./aws-nuke run --config nuke-config.yml \
           --access-key-id ${{ secrets.ACCESS_KEY }} \
           --secret-access-key ${{ secrets.SECRET_KEY }} \
-          --default-region "ap-southeast-1" \
+          --default-region "ap-south-1" \
           --log-level "info" \
-          --log-format=json \
           --no-alias-check \
-          --log-force-colors > nuke-output
+          --log-force-colors \
+          --log-full-timestamp \
+          --no-prompt \
+          --prompt-delay 10 > nuke-output
 
       - name: Upload Nuke Output
         if: steps.aws-nuke.outcome == 'true'
