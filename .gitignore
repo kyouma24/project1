@@ -3,5 +3,5 @@ node_modules/
 /playwright-report/
 /playwright/.cache/
 /Dockerfile
-grafana-*
-advanced*
+/grafana-*
+/advanced*
