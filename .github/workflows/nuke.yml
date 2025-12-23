@@ -78,6 +78,7 @@ jobs:
           --log-force-colors \
           --log-full-timestamp \
           --no-prompt \
+          --no-dry-run \
           --prompt-delay 10 > nuke-output
 
       - name: Upload Nuke Output
