@@ -1,14 +1,25 @@
 regions:
 - eu-west-1
 
+blocklist:
+  - "111122223333"
+
+no-blocklist-terms-default: true
+
+bypass-alias-check-accounts:
+  - 271547278517
+
 resource-types:
   excludes:
-  - IAMUser
-  - IAMUserAccessKey
-  - IAMUserPolicyAttachment
+    - IAMUser
+    - IAMUserAccessKey
+    - IAMUserPolicyAttachment
+  includes:
+    - S3Object
+  
 
 accounts:
-  "271547278517": # aws-nuke-example
+  "271547278517":
     filters:
       IAMUser:
       - "raghavendra.merugu@neonxt.com"
@@ -16,4 +27,3 @@ accounts:
       - "raghavendra.merugu@neonxt.com -> AdministratorAccess"
       IAMUserAccessKey:
       - "raghavendra.merugu@neonxt.com -> AKIAT6OL2US24JK24WXY"
-

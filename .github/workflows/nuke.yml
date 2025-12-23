@@ -1,7 +1,6 @@
 name: Testing Auth
 on: 
   workflow_dispatch:
-  push:
 jobs:
   nuke-aws:
     runs-on: ubuntu-latest
@@ -67,18 +66,20 @@ jobs:
           chmod +x aws-nuke
 
       - name: Run AWS Nuke
+        id: aws-nuke
         if: always()
         run: |
           ./aws-nuke run --config nuke-config.yml \
           --access-key-id ${{ secrets.ACCESS_KEY }} \
           --secret-access-key ${{ secrets.SECRET_KEY }} \
-          --default-region "ap-south-1" \
-          --log-level "debug" \
+          --default-region "ap-southeast-1" \
+          --log-level "info" \
           --log-format=json \
+          --no-alias-check \
           --log-force-colors > nuke-output
 
       - name: Upload Nuke Output
-        if: steps.nuke.outcome == 'true'
+        if: steps.aws-nuke.outcome == 'true'
         uses: actions/upload-artifact@v4
         with: 
           name: nuke-report
