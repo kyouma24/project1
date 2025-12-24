@@ -73,16 +73,16 @@ jobs:
         id: aws-nuke
         if: failure()
         run: |
-          ./aws-nuke run --config nuke-config.yml \
+          ./aws-nuke run --config ../nuke-config.yml \
           --log-level "info" \
           --no-alias-check \
           --log-force-colors \
           --log-full-timestamp \
-          --no-prompt > nuke-report.yml
+          --no-prompt 
 
-      - name: Upload Nuke Output
-        if: always() || steps.aws-nuke.outcome == 'true'
-        uses: actions/upload-artifact@v4
-        with: 
-          name: nuke-report
-          path: nuke-report.yml
+    #   - name: Upload Nuke Output
+    #     if: always() || steps.aws-nuke.outcome == 'true'
+    #     uses: actions/upload-artifact@v4
+    #     with: 
+    #       name: nuke-report
+    #       path: nuke-report.yml
