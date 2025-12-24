@@ -26,7 +26,7 @@ jobs:
         run: |
           IFS=',' read -r -a USERS <<< "$IAM_USERS_LIST"
 
-          SAFE_WINDOW=60
+          SAFE_WINDOW=244800
           CURRENT_TIME=$(date +%s)
           
           echo "Checking login activity for: ${USERS[@]}"
