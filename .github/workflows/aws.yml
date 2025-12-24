@@ -13,6 +13,8 @@ jobs:
       IAM_USERS_LIST: ${{ secrets.SAFE_USERS }} 
 
     steps:
+      - name: Get Code
+        uses: actions/checkout@v5
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@main
         with:
@@ -73,7 +75,7 @@ jobs:
         id: aws-nuke
         if: failure()
         run: |
-          ./aws-nuke run --config ../nuke-config.yml \
+          ./aws-nuke run --config ~/nuke-config.yml \
           --log-level "info" \
           --no-alias-check \
           --log-force-colors \
