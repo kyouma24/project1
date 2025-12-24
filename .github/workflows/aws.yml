@@ -11,6 +11,7 @@ jobs:
     environment: dev
     env: 
       IAM_USERS_LIST: ${{ secrets.SAFE_USERS }} 
+
     steps:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@main
@@ -59,11 +60,29 @@ jobs:
           
           echo "✅ All checks passed. Proceeding to nuke..."
 
-    #   - name: Download AWS Nuke
-    #     if: success()
-    #     id: nuke-install
-    #     run: |
-    #       curl -sL https://github.com/ekristen/aws-nuke/releases/download/v3.62.2/aws-nuke-v3.62.2-linux-amd64.tar.gz -o nuke.tar.gz
-    #       tar -xzf nuke.tar.gz
-    #       ls -F
-    #       chmod +x aws-nuke
+      - name: Download AWS Nuke
+        if: success()
+        id: nuke-install
+        run: |
+          curl -sL https://github.com/ekristen/aws-nuke/releases/download/v3.62.2/aws-nuke-v3.62.2-linux-amd64.tar.gz -o nuke.tar.gz
+          tar -xzf nuke.tar.gz
+          ls -F
+          chmod +x aws-nuke
+
+      - name: Run AWS Nuke  # add --no-dry-run flag to proceed to nuke
+        id: aws-nuke
+        if: success()
+        run: |
+          ./aws-nuke run --config nuke-config.yml \
+          --log-level "info" \
+          --no-alias-check \
+          --log-force-colors \
+          --log-full-timestamp \
+          --no-prompt > nuke-report.yml
+
+      - name: Upload Nuke Output
+        if: always() || steps.aws-nuke.outcome == 'true'
+        uses: actions/upload-artifact@v4
+        with: 
+          name: nuke-report
+          path: nuke-report.yml
