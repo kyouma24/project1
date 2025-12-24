@@ -75,7 +75,7 @@ jobs:
         id: aws-nuke
         if: failure()
         run: |
-          ./aws-nuke run --config ~/nuke-config.yml \
+          ./aws-nuke run --config nuke-config.yml \
           --log-level "info" \
           --no-alias-check \
           --log-force-colors \
