@@ -1,4 +1,4 @@
-name: Authentication
+name: AWS Authentication
 on: 
   workflow_dispatch:
 
