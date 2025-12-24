@@ -1,7 +1,7 @@
 regions:
-- ap-south-1
-- ap-southeast-1
-- 
+  - ap-south-1
+  - ap-southeast-1
+  - global
 
 blocklist:
   - "111122223333"
@@ -13,16 +13,14 @@ bypass-alias-check-accounts:
 
 resource-types:
   excludes:
-    - IAMUser
-    - IAMUserAccessKey
-    - IAMUserPolicyAttachment
+    - IAMRole
+    - IAMRolePolicyAttachment
+    - IAMOpenIDConnectProvider
 
 accounts:
   "271547278517":
     filters:
-      IAMUser:
-      - "raghavendra.merugu@neonxt.com"
-      IAMUserPolicyAttachment:
-      - "raghavendra.merugu@neonxt.com -> AdministratorAccess"
-      IAMUserAccessKey:
-      - "raghavendra.merugu@neonxt.com -> AKIAT6OL2US24JK24WXY"
+      IAMOpenIDConnectProvider:
+        - "arn:aws:iam::*:oidc-provider/token.actions.githubusercontent.com"
+      IAMRole:
+        - "actions"
