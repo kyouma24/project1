@@ -1,5 +1,7 @@
 regions:
-- eu-west-1
+- ap-south-1
+- ap-southeast-1
+- 
 
 blocklist:
   - "111122223333"
@@ -14,11 +16,6 @@ resource-types:
     - IAMUser
     - IAMUserAccessKey
     - IAMUserPolicyAttachment
-  includes:
-    - S3Object
-    - S3Bucket
-    - EC2Instance
-  
 
 accounts:
   "271547278517":

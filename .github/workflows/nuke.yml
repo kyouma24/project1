@@ -1,6 +1,10 @@
 name: Testing Auth
 on: 
   workflow_dispatch:
+
+permissions:
+  id-token: write
+
 jobs:
   nuke-aws:
     runs-on: ubuntu-latest
@@ -57,8 +61,8 @@ jobs:
           echo "✅ All checks passed. Proceeding to nuke..."
 
       - name: Download AWS Nuke
-        if: failure()
-        id: nuke
+        if: success()
+        id: nuke-install
         run: |
           curl -sL https://github.com/ekristen/aws-nuke/releases/download/v3.62.2/aws-nuke-v3.62.2-linux-amd64.tar.gz -o nuke.tar.gz
           tar -xzf nuke.tar.gz
@@ -67,7 +71,7 @@ jobs:
 
       - name: Run AWS Nuke
         id: aws-nuke
-        if: always()
+        if: success()
         run: |
           ./aws-nuke run --config nuke-config.yml \
           --access-key-id ${{ secrets.ACCESS_KEY }} \
@@ -79,11 +83,11 @@ jobs:
           --log-full-timestamp \
           --no-prompt \
           --no-dry-run \
-          --prompt-delay 10 > nuke-output
+          --prompt-delay 10 > nuke-output.yml
 
       - name: Upload Nuke Output
         if: always() || steps.aws-nuke.outcome == 'true'
         uses: actions/upload-artifact@v4
         with: 
           name: nuke-report
-          path: nuke-output
+          path: nuke-output.yml
