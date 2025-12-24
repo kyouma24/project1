@@ -11,11 +11,11 @@ no-blocklist-terms-default: true
 bypass-alias-check-accounts:
   - 271547278517
 
-resource-types:
-  excludes:
-    - IAMRole
-    - IAMRolePolicyAttachment
-    - IAMOpenIDConnectProvider
+# resource-types:
+#   excludes:
+#     - IAMRole
+#     - IAMRolePolicyAttachment
+#     - IAMOpenIDConnectProvider
 
 accounts:
   "271547278517":
@@ -24,3 +24,5 @@ accounts:
         - "arn:aws:iam::*:oidc-provider/token.actions.githubusercontent.com"
       IAMRole:
         - "actions"
+      IAMRolePolicyAttachment:
+        - "actions -> *"
