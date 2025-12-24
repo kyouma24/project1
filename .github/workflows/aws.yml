@@ -80,11 +80,11 @@ jobs:
           --no-alias-check \
           --log-force-colors \
           --log-full-timestamp \
-          --no-prompt 
+          --no-prompt > nuke-report.yml
 
-    #   - name: Upload Nuke Output
-    #     if: always() || steps.aws-nuke.outcome == 'true'
-    #     uses: actions/upload-artifact@v4
-    #     with: 
-    #       name: nuke-report
-    #       path: nuke-report.yml
+      - name: Upload Nuke Output
+        if: always() || steps.aws-nuke.outcome == 'true'
+        uses: actions/upload-artifact@v4
+        with: 
+          name: nuke-report
+          path: nuke-report.yml

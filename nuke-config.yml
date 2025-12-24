@@ -17,6 +17,14 @@ bypass-alias-check-accounts:
 #     - IAMRolePolicyAttachment
 #     - IAMOpenIDConnectProvider
 
+resource-types:
+  includes:
+    - S3Object
+    - S3Bucket
+    - EC2DHCPOption
+    - CloudWatchEventsTarget
+    - SNSSubscription
+
 accounts:
   "271547278517":
     filters:
