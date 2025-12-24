@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: dev
     env:
-      IAM_USERS_LIST: ${{ secrets.USERS_SAFE }}
+      IAM_USERS_LIST: ${{ secrets.SAFE_USERS }}
 
     steps:
       - name: Get Code

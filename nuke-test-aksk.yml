@@ -1,0 +1,92 @@
+regions:
+  - ap-south-1
+  - ap-southeast-1
+  - global
+
+blocklist:
+  - "111122223333"
+
+no-blocklist-terms-default: true
+
+bypass-alias-check-accounts:
+  - 271547278517
+
+resource-types:
+  # excludes:
+  #   - IAMOpenIDConnectProvider
+  includes:
+    - ACMCertificate
+    - AthenaWorkGroup
+    - BackupVault
+    - BackupPlan
+    - CloudFormationStack
+    - CloudFormationStackSet
+    - CloudWatchAlarm
+    - CloudWatchDashboard
+    - CloudWatchEventsRule
+    - CloudWatchEventsTarget
+    - CloudWatchLogsLogGroup
+    - EC2Address
+    - EC2DefaultSecurityGroupRule
+    - EC2DHCPOption
+    - EC2Image
+    - EC2Instance
+    - EC2InternetGateway
+    - EC2InternetGatewayAttachment
+    - EC2KeyPair
+    - EC2NetworkACL
+    - EC2NetworkInterface
+    - EC2RouteTable
+    - EC2SecurityGroup
+    - EC2Snapshot
+    - EC2Subnet
+    - EC2Volume
+    - EC2VPC
+    - EFSFileSystem
+    - EFSMountTarget
+    - ELBv2
+    - ELBv2ListenerRule
+    - ELBv2TargetGroup
+    - IAMGroupPolicyAttachment
+    - IAMInstanceProfile
+    - IAMInstanceProfileRole
+    - IAMLoginProfile
+    - IAMPolicy
+    - IAMRole
+    - IAMRolePolicy
+    - IAMRolePolicyAttachment
+    - IAMUser
+    - IAMUserGroupAttachment
+    - IAMUserMFADevice
+    - IAMUserPolicyAttachment
+    - IAMUserAccessKey
+    - IAMUserPolicy
+    - LambdaFunction
+    - RDSDBSubnetGroup
+    - ResourceExplorer2Index
+    - S3Bucket
+    - S3Object
+    - SchedulerSchedule
+    - SESIdentity
+    - SSMAssociation
+    - SSMDocument
+    - SSMQuickSetupConfigurationManager
+    - SNSSubscription
+    - SNSTopic
+    - RDSSnapshot
+
+accounts:
+  "271547278517":
+    filters:
+      IAMUser:
+      - "raghavendra.merugu@neonxt.com"
+      IAMUserPolicyAttachment:
+      - "raghavendra.merugu@neonxt.com -> AdministratorAccess"
+      IAMUserAccessKey:
+      - "raghavendra.merugu@neonxt.com -> AKIAT6OL2US24JK24WXY"
+      IAMOpenIDConnectProvider:
+        - "arn:aws:iam::*:oidc-provider/token.actions.githubusercontent.com"
+      IAMRole:
+        - "actions"
+      IAMRolePolicyAttachment:
+        - "actions -> AdministratorAccess"
