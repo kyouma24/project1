@@ -2,7 +2,7 @@ name: AWS Authentication
 on: 
   workflow_dispatch:
   schedule:
-     - cron: "40 5 * * *"
+     - cron: "30 11 * * *"
 
 
 permissions:
