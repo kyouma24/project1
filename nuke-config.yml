@@ -82,3 +82,10 @@ accounts:
         - "actions"
       IAMRolePolicyAttachment:
         - "actions -> AdministratorAccess"
+      IAMUser:
+        - "swapnil-shingote"
+      IAMLoginProfile:
+        - "swapnil-shingote"
+      IAMUserPolicyAttachment:
+        - "actions -> AdministratorAccess"
+        - "actions -> Billing"
