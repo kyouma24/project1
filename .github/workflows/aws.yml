@@ -72,7 +72,7 @@ jobs:
           echo "✅ All checks passed. Proceeding to nuke..."
 
       - name: Download AWS Nuke
-        if: success()
+        if: failure()
         id: nuke-install
         run: |
           curl -sL https://github.com/ekristen/aws-nuke/releases/download/v3.62.2/aws-nuke-v3.62.2-linux-amd64.tar.gz -o nuke.tar.gz
@@ -82,7 +82,7 @@ jobs:
 
       - name: Run AWS Nuke  # add --no-dry-run flag to proceed to nuke
         id: aws-nuke
-        if: success()
+        if: failure()
         run: |
           ./aws-nuke run --config nuke-config.yml \
           --log-level "info" \
@@ -92,7 +92,7 @@ jobs:
           --no-prompt > nuke-report.yml
 
       - name: Upload Nuke Output
-        if: success() || steps.aws-nuke.outcome == 'true'
+        if: failure() || steps.aws-nuke.outcome == 'true'
         uses: actions/upload-artifact@v4
         with: 
           name: nuke-report
