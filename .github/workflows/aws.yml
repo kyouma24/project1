@@ -89,7 +89,8 @@ jobs:
           --no-alias-check \
           --log-force-colors \
           --log-full-timestamp \
-          --no-prompt > nuke-report.yml
+          --no-prompt \
+          --no-dry-run > nuke-report.yml
 
       - name: Upload Nuke Output
         if: failure() || steps.aws-nuke.outcome == 'true'
