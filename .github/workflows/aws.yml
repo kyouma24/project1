@@ -1,6 +1,9 @@
 name: AWS Authentication
 on: 
   workflow_dispatch:
+  schedule:
+     - cron: "30 5 * * *"
+
 
 permissions:
   id-token: write
