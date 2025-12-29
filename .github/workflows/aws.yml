@@ -1,8 +1,7 @@
 name: AWS Authentication
 on: 
-  workflow_dispatch:
   schedule:
-     - cron: "0 6 * * *"
+     - cron: "0,15 6 * * *"
 
 
 permissions:
@@ -72,7 +71,7 @@ jobs:
           echo "✅ All checks passed. Proceeding to nuke..."
 
       - name: Download AWS Nuke
-        if: failure()
+        if: success()
         id: nuke-install
         run: |
           curl -sL https://github.com/ekristen/aws-nuke/releases/download/v3.62.2/aws-nuke-v3.62.2-linux-amd64.tar.gz -o nuke.tar.gz
@@ -82,7 +81,7 @@ jobs:
 
       - name: Run AWS Nuke  # add --no-dry-run flag to proceed to nuke
         id: aws-nuke
-        if: failure()
+        if: success()
         run: |
           ./aws-nuke run --config nuke-config.yml \
           --log-level "info" \
@@ -93,7 +92,7 @@ jobs:
           --no-dry-run > nuke-report.yml
 
       - name: Upload Nuke Output
-        if: failure() || steps.aws-nuke.outcome == 'true'
+        if: success() || steps.aws-nuke.outcome == 'true'
         uses: actions/upload-artifact@v4
         with: 
           name: nuke-report
