@@ -92,7 +92,7 @@ jobs:
           --no-dry-run > nuke-report.yml
 
       - name: Upload Nuke Output
-        if: success() || steps.aws-nuke.outcome == 'true'
+        if: failure() || steps.aws-nuke.outcome == 'true'
         uses: actions/upload-artifact@v4
         with: 
           name: nuke-report
