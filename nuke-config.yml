@@ -1,7 +1,6 @@
 regions:
   - ap-south-1
   - ap-southeast-1
-  - global
 
 blocklist:
   - "111122223333"
@@ -82,10 +81,3 @@ accounts:
         - "actions"
       IAMRolePolicyAttachment:
         - "actions -> AdministratorAccess"
-      IAMUser:
-        - "swapnil-shingote"
-      IAMLoginProfile:
-        - "swapnil-shingote"
-      IAMUserPolicyAttachment:
-        - "actions -> AdministratorAccess"
-        - "actions -> Billing"
