@@ -1,7 +1,7 @@
 name: AWS Authentication
 on: 
   schedule:
-     - cron: "0,15 6 * * *"
+    - cron: "0,15 6 * * *"
 
 
 permissions:
