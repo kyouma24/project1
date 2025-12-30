@@ -8,7 +8,7 @@ permissions:
   id-token: write
 
 jobs:
-  run_job_with_aws:
+  nuke:
     runs-on: ubuntu-latest
     environment: dev
     env:
@@ -22,14 +22,10 @@ jobs:
         with:
           role-to-assume: ${{ secrets.ROLE_TO_ASSUME }}
           aws-region: ${{ vars.AWS_REGION }}
-
-      - name: Additional steps
-        run: aws sts get-caller-identity 
       
       - name: Safety Check
         shell: bash
         run: |
-          # Create array from comma-separated list
           IFS=',' read -r -a USERS <<< "$IAM_USERS_LIST"
 
           SAFE_WINDOW=244800
@@ -38,20 +34,15 @@ jobs:
           echo "🔍 Checking login activity for: ${USERS[@]}"
 
           for user in "${USERS[@]}"; do
-            # Trim whitespace
             user=$(echo "$user" | xargs)
 
             echo "--------------------------------"
             echo "Checking user: $user"
             
-            # --- FIXED LOGIC START ---
-            # We run the command inside the 'if' logic. 
-            # This prevents 'set -e' from crashing the script if the user is missing.
             if ! USER_INFO=$(aws iam get-user --user-name "$user" 2>/dev/null); then
                echo "⚠️ User $user not found in AWS. Skipping safety check for them."
                continue
             fi
-            # --- FIXED LOGIC END ---
 
             LAST_LOGIN_ISO=$(echo "$USER_INFO" | jq -r '.User.PasswordLastUsed // "None"')
 
@@ -92,7 +83,7 @@ jobs:
           --no-dry-run > nuke-report.yml
 
       - name: Upload Nuke Output
-        if: failure() || steps.aws-nuke.outcome == 'true'
+        if: success() || steps.aws-nuke.outcome == 'true'
         uses: actions/upload-artifact@v4
         with: 
           name: nuke-report
