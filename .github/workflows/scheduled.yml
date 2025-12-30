@@ -1,0 +1,14 @@
+name: Scheduled Workflow
+on: 
+  schedule:
+    - cron: "15 * * * *"
+  workflow_dispatch:
+jobs:
+  scheduler:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Scheduled Step
+        run: |
+          echo "Hello, this workflow runs at every 15 minutes"
+          echo "Bye, bye!" 
+  
