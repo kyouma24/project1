@@ -7,7 +7,7 @@ blocklist:
 no-blocklist-terms-default: true
 
 bypass-alias-check-accounts:
-  - 271547278517
+  - XXXXXXXXXXXXX
 
 resource-types:
   includes:
